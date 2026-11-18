@@ -245,6 +245,19 @@ ul.grid {
   margin-block: var(--space-6);
 }
 
+/* Official store badges (e.g. Apple's "Download on the App Store"), used as-is: no underline, outline or hover
+   change, at least 40px tall per Apple's guidelines */
+.store-badge {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.store-badge img {
+  display: block;
+  width: auto;
+  height: 3rem;
+}
+
 /* ---- Quote --------------------------------------------------------------------------- */
 .quote {
   margin: var(--space-6) 0;
