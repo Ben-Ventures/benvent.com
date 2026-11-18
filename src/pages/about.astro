@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets'
 import DefaultLayout from '@layouts/DefaultLayout.astro'
 import PageHeader from '@components/PageHeader.astro'
+import BlockQuote from '@components/BlockQuote.astro'
 import headshot from '@assets/images/headshot.jpg'
 
 const aiRange = [
@@ -41,7 +42,7 @@ const aiRange = [
         </p>
         <p>
           What you get: a true frontend specialist who also understands the full stack, and knows what it really takes
-          to build a good product and ship it fast. Don't just take my word for it; see my <a href="/portfolio/"
+          to build a good product and ship it fast. Don't just take my word for it; see my <a href="#testimonials"
             >testimonials</a
           >.
         </p>
@@ -111,6 +112,33 @@ const aiRange = [
     </div>
   </section>
 
+  <section class="section" id="testimonials">
+    <div class="container">
+      <div class="prose testimonials">
+        <h2>Testimonials</h2>
+        <BlockQuote author="Robert, Lead Designer">
+          Ben was an amazing communicator from start to finish. He clearly explained what needed to be done and offered
+          smart suggestions for how we could make our site stronger. We gave him a set of website mocks, and he turned
+          them into a fully realized, polished site incredibly fast. He’s professional, easy to talk to, and genuinely
+          great at what he does. Working with Ben made the whole process smooth and stress-free. He’s become a trusted
+          partner in our digital presence.
+        </BlockQuote>
+        <BlockQuote
+          author="Scuba Steve, Founder"
+          avatar="/projects/nippies/scuba_avi.png"
+          link="https://scubasteveart.com"
+        >
+          Working with Ben was a serious treat! He translated our word salad of an idea into executable steps that made
+          sense to a code-illiterate person. He had a speedy response time and professional attitude keeping up with our
+          frequent needs to update copy and images. 10/10 would hire again!
+        </BlockQuote>
+        <BlockQuote author="Mat, Lead Backend Developer" avatar="/projects/exposure-tracker/mat_avi.png">
+          Ben? Yeah, he's alright.
+        </BlockQuote>
+      </div>
+    </div>
+  </section>
+
   <section class="section section--closing">
     <div class="container">
       <h2 class="closing">Let's Get to Work.</h2>
@@ -168,8 +196,15 @@ const aiRange = [
   }
 
   /* The prose column is centred by the kit; on this page it lines up with the sections above */
-  .brand {
+  .brand,
+  .testimonials {
     margin-inline: 0;
+  }
+
+  /* The gap below comes from the next section's top padding; drop the last quote's own margin so it isn't
+     added on top (WEB.md: one shared gap between sections) */
+  .testimonials :global(.quote:last-child) {
+    margin-bottom: 0;
   }
 
   /* These short blocks sit under full-width cards, so they run the full width instead of the kit's 68-character
