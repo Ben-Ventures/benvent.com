@@ -3,8 +3,7 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
 import ContentMedia from '@components/ContentMedia.astro'
-import exposureLight from '@assets/images/projects/exposure-tracker/light/ipad-04-exposure-details.png'
-import exposureDark from '@assets/images/projects/exposure-tracker/dark/ipad-04-exposure-details.png'
+import exposureShareCard from '@assets/images/projects/exposure-tracker/share-card.jpg'
 
 const offerings = [
   {
@@ -52,9 +51,8 @@ const offerings = [
   </section>
 
   <ContentMedia
-    imgLight={exposureLight}
-    imgDark={exposureDark}
-    imgAlt="IPSDI Exposure Tracker on iPad: an exposure's details, with a map of the location, its address, date and exposure type"
+    img={exposureShareCard}
+    imgAlt="IPSDI Exposure Tracker: “Firefighting isn’t getting any easier. Documenting your exposures is.” beside a phone showing saved exposures on a map"
   >
     <h2>Spotlight: IPSDI Exposure Tracker</h2>
     <p class="lead">
