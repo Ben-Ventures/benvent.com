@@ -258,31 +258,44 @@ ul.grid {
   height: 3rem;
 }
 
-/* The badge with the app's live rating beside it (AppStoreBadge). The placeholder and the loaded rating are the same
-   height, so nothing moves when the rating arrives. */
+/* The badge with the app's live rating beside it (AppStoreBadge), in the App Store's own summary style: the score
+   and stars on one line, the count under them, as tall as the badge. One row on phones too. The placeholder is the
+   same two lines, so nothing below moves when the rating arrives. */
 .app-store {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-3) var(--space-5);
+  gap: var(--space-5);
   margin-block: var(--space-6);
 }
 
 .app-store__rating {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 3rem;
+  text-decoration: none;
+}
+
+.app-store__summary {
+  display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 3rem;
-  font-size: var(--text-sm);
+}
+
+.app-store__score {
+  font-weight: var(--weight-medium);
+  font-size: var(--text-h3);
+  line-height: 1;
 }
 
 .app-store__stars {
   display: inline-block;
   position: relative;
   color: var(--color-fg-muted);
-  font-size: var(--text-lg);
+  font-size: var(--text-sm);
   line-height: 1;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   white-space: nowrap;
 }
 
@@ -292,6 +305,16 @@ ul.grid {
   width: calc(var(--rating) / 5 * 100%);
   overflow: hidden;
   color: var(--color-fg);
+}
+
+.app-store__text {
+  color: var(--color-fg-muted);
+  font-size: var(--text-xs);
+  line-height: 1.2;
+}
+
+.app-store__rating:hover .app-store__text {
+  color: inherit;
 }
 
 /* ---- Quote --------------------------------------------------------------------------- */

@@ -33,8 +33,11 @@ const ratingsUrl = `${url}?see-all=reviews`
     <img src="/badges/app-store.svg" alt="Download on the App Store" width="144" height="48" class="media-bare" />
   </a>
   <a class="app-store__rating" href={ratingsUrl} target="_blank" rel="noopener noreferrer">
-    <span class="app-store__stars" aria-hidden="true" style="--rating: 0">
-      <span class="app-store__stars-fill">★★★★★</span>★★★★★
+    <span class="app-store__summary">
+      <span class="app-store__score" data-rating-score hidden></span>
+      <span class="app-store__stars" aria-hidden="true" style="--rating: 0">
+        <span class="app-store__stars-fill">★★★★★</span>★★★★★
+      </span>
     </span>
     <span class="app-store__text" data-rating-text>See Ratings on the App Store</span>
   </a>
@@ -47,8 +50,9 @@ const ratingsUrl = `${url}?see-all=reviews`
     const { appId, country } = el.dataset
     const stars = el.querySelector<HTMLElement>('.app-store__stars')
     const text = el.querySelector<HTMLElement>('[data-rating-text]')
+    const score = el.querySelector<HTMLElement>('[data-rating-score]')
     const link = el.querySelector<HTMLAnchorElement>('.app-store__rating')
-    if (!appId || !stars || !text || !link) continue
+    if (!appId || !stars || !text || !score || !link) continue
 
     fetch(
       `https://itunes.apple.com/lookup?id=${encodeURIComponent(appId)}&country=${encodeURIComponent(country ?? 'us')}`,
@@ -64,7 +68,9 @@ const ratingsUrl = `${url}?see-all=reviews`
         const shown = rating.toFixed(1)
         const ratings = `${count.toLocaleString()} ${count === 1 ? 'Rating' : 'Ratings'}`
         stars.style.setProperty('--rating', String(rating))
-        text.textContent = `${shown} · ${ratings}`
+        score.textContent = shown
+        score.hidden = false
+        text.textContent = `${ratings} on the App Store`
         link.setAttribute('aria-label', `Rated ${shown} out of 5 from ${ratings.toLowerCase()} on the App Store`)
       })
       .catch(() => {
