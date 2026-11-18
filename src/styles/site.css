@@ -90,6 +90,11 @@ ul.grid {
   width: 100%;
 }
 
+/* A tall capture (ContentMedia imgLight/imgDark) shows its top 4:3 in the BrowserFrame, which crops from the top */
+.media-split__media .media-split__screen {
+  aspect-ratio: 4 / 3;
+}
+
 @media (min-width: 768px) {
   .media-split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -195,6 +200,42 @@ ul.grid {
   object-fit: cover;
 }
 
+/* Tall phone screenshots (ThemedGallery portrait): whole, not cropped, two to a row on phones and three from sm */
+.gallery--portrait {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .gallery--portrait {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gallery--portrait .gallery__img {
+  aspect-ratio: auto;
+}
+
+/* ---- Light and dark screenshots (ThemedImage) ---------------------------------------------
+ * Hide the capture that doesn't match the active theme, resolved exactly as tokens.css resolves it: <html
+ * data-theme> (the footer toggle) wins, otherwise the OS setting. display: none also takes the hidden one out of the
+ * accessibility tree, and stops a lazy image from loading. */
+:root[data-theme='light'] .theme-image--dark,
+:root[data-theme='dark'] .theme-image--light {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .theme-image--dark {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-image--light {
+    display: none;
+  }
+}
+
 /* Spacing around an embed; the iframe itself is the kit's .embed-16x9 (outline from base.css) */
 .video {
   margin-block: var(--space-6) var(--space-4);
@@ -255,6 +296,7 @@ ul.grid {
 }
 
 .lightbox img {
+  width: auto; /* overrides a width attribute (ThemedGallery), so a tall image shrinks to fit inside its outline */
   max-height: 100%;
   object-fit: contain;
 }

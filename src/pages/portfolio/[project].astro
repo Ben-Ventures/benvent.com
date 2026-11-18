@@ -4,6 +4,8 @@ import PageHeader from '@components/PageHeader.astro'
 import SocialShares from '@components/SocialShares.astro'
 import { getCollection, render } from 'astro:content'
 import type { CollectionEntry } from 'astro:content'
+import { existsSync } from 'node:fs'
+import { join } from 'node:path'
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects')
@@ -23,13 +25,14 @@ interface Props {
 const { project } = Astro.props
 const { Content } = await render(project)
 
-// Generate lightbox modals for project images dynamically
-const projectImageCount = 4 // Or detect this dynamically if needed
+// Generate lightbox modals for the project images that exist (the build runs from the project root). A write-up that
+// uses <ThemedGallery> has no project-image-N.png files: that component renders its own lightboxes.
+const projectImageCount = 4
 const projectImages = Array.from({ length: projectImageCount }, (_, i) => ({
   id: `img${i + 1}`,
   src: `/projects/${project.id}/project-image-${i + 1}.png`,
   alt: `Project image ${i + 1}`,
-}))
+})).filter((image) => existsSync(join(process.cwd(), 'public', image.src)))
 ---
 
 <DefaultLayout title={project.data.title} description={project.data.description} url={`/portfolio/${project.id}/`}>
