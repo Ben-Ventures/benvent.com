@@ -3,6 +3,8 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
 import ContentMedia from '@components/ContentMedia.astro'
+import exposureLight from '@assets/images/projects/exposure-tracker/light/ipad-04-exposure-details.png'
+import exposureDark from '@assets/images/projects/exposure-tracker/dark/ipad-04-exposure-details.png'
 
 const offerings = [
   {
@@ -49,8 +51,12 @@ const offerings = [
     </div>
   </section>
 
-  <ContentMedia imgSrc="/projects/exposure-tracker/project-image-5.png">
-    <h2>Spotlight: Exposure Tracker</h2>
+  <ContentMedia
+    imgLight={exposureLight}
+    imgDark={exposureDark}
+    imgAlt="IPSDI Exposure Tracker on iPad: an exposure's details, with a map of the location, its address, date and exposure type"
+  >
+    <h2>Spotlight: IPSDI Exposure Tracker</h2>
     <p class="lead">
       A cross-platform application built for firefighters and first responders to securely document exposures,
       incidents, and long-term health risks.
