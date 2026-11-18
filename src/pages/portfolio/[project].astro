@@ -41,6 +41,8 @@ const projectImages = Array.from({ length: projectImageCount }, (_, i) => ({
     subtitle={project.data.description}
     meta={`Made with ${project.data.platform}`}
     featuredImage={`/projects/${project.id}/banner.png`}
+    bannerLight={project.data.bannerLight}
+    bannerDark={project.data.bannerDark}
   />
 
   <!-- Lightboxes for the gallery images (opened with #imgN links). Kept before the sections so the last

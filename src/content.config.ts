@@ -7,15 +7,19 @@ import { glob } from 'astro/loaders'
 // 3. Define your collection(s)
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
-  schema: z.object({
-    title: z.string(),
-    platform: z.string(),
-    isFeatured: z.boolean().default(false),
-    sortOrder: z.number(),
-    description: z.string(),
-    featuredImage: z.string(),
-    badge: z.string().optional(), // a short label shown as the kit's magenta .badge, e.g. "Latest"
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      platform: z.string(),
+      isFeatured: z.boolean().default(false),
+      sortOrder: z.number(),
+      description: z.string(),
+      featuredImage: z.string(),
+      badge: z.string().optional(), // a short label shown as the kit's magenta .badge, e.g. "Latest"
+      // Optional light and dark banners that follow the site theme; without them the page uses public/projects/<id>/banner.png
+      bannerLight: image().optional(),
+      bannerDark: image().optional(),
+    }),
 })
 
 // 4. Export a single `collections` object to register you collection(s)
