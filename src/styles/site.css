@@ -258,6 +258,42 @@ ul.grid {
   height: 3rem;
 }
 
+/* The badge with the app's live rating beside it (AppStoreBadge). The placeholder and the loaded rating are the same
+   height, so nothing moves when the rating arrives. */
+.app-store {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  margin-block: var(--space-6);
+}
+
+.app-store__rating {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  font-size: var(--text-sm);
+}
+
+.app-store__stars {
+  display: inline-block;
+  position: relative;
+  color: var(--color-fg-muted);
+  font-size: var(--text-lg);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+.app-store__stars-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--rating) / 5 * 100%);
+  overflow: hidden;
+  color: var(--color-fg);
+}
+
 /* ---- Quote --------------------------------------------------------------------------- */
 .quote {
   margin: var(--space-6) 0;

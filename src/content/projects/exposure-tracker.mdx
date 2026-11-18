@@ -4,13 +4,14 @@ platform: Ionic
 isFeatured: false
 description: A secure way to record exposures, since firefighting isn't getting any easier.
 sortOrder: 2
-featuredImage: "exposure-tracker.png"
+featuredImage: "exposure-tracker.jpg"
 bannerLight: "../../assets/images/projects/exposure-tracker/banner-light.png"
 bannerDark: "../../assets/images/projects/exposure-tracker/banner-dark.png"
 ---
 
 import BlockQuote from "@components/BlockQuote.astro";
 import LinkIcon from '@components/LinkIcon.astro'
+import AppStoreBadge from '@components/AppStoreBadge.astro'
 import ThemedGallery from "@components/ThemedGallery.astro";
 import homeLight from "@assets/images/projects/exposure-tracker/light/01-home.png";
 import homeDark from "@assets/images/projects/exposure-tracker/dark/01-home.png";
@@ -90,14 +91,7 @@ In November 2026, I added a landing page to the web app at exposure.ipsdi.io. It
   >Visit IPSDI Exposure Tracker <LinkIcon /></a>
 </div>
 
-<div class="link-row">
-  <a
-    class="store-badge"
-    href="https://apps.apple.com/us/app/ipsdi-exposure-tracker/id1457260349"
-    target="_blank"
-    rel="noopener noreferrer"
-  ><img src="/badges/app-store.svg" alt="Download on the App Store" width="144" height="48" class="media-bare" /></a>
-</div>
+<AppStoreBadge appId="1457260349" url="https://apps.apple.com/us/app/ipsdi-exposure-tracker/id1457260349" />
 
 ## Press & Podcasts
 
