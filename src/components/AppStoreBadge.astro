@@ -1,0 +1,80 @@
+---
+/**
+ * AppStoreBadge Component
+ *
+ * @description Apple's official "Download on the App Store" badge, plus the app's live star rating.
+ * The rating is fetched in the visitor's browser from Apple's public lookup API
+ * (`itunes.apple.com/lookup`, which allows cross-origin requests), so it stays current without redeploying.
+ * Until it loads, or if the request fails, a placeholder link to the listing's ratings sits in the same space,
+ * with empty stars, so nothing shifts when the rating arrives and nothing is ever wrong.
+ */
+interface Props {
+  /**
+   * The numeric App Store ID, without the "id" prefix (e.g. "1457260349")
+   */
+  appId: string
+  /**
+   * The listing URL the badge and rating link to
+   */
+  url: string
+  /**
+   * The storefront to read ratings from
+   * @default 'us'
+   */
+  country?: string
+}
+
+const { appId, url, country = 'us' } = Astro.props
+const ratingsUrl = `${url}?see-all=reviews`
+---
+
+<div class="app-store" data-app-store-rating data-app-id={appId} data-country={country}>
+  <a class="store-badge" href={url} target="_blank" rel="noopener noreferrer">
+    <img src="/badges/app-store.svg" alt="Download on the App Store" width="144" height="48" class="media-bare" />
+  </a>
+  <a class="app-store__rating" href={ratingsUrl} target="_blank" rel="noopener noreferrer">
+    <span class="app-store__summary">
+      <span class="app-store__score" data-rating-score hidden></span>
+      <span class="app-store__stars" aria-hidden="true" style="--rating: 0">
+        <span class="app-store__stars-fill">★★★★★</span>★★★★★
+      </span>
+    </span>
+    <span class="app-store__text" data-rating-text>See Ratings on the App Store</span>
+  </a>
+</div>
+
+<script>
+  type Lookup = { results?: { averageUserRating?: number; userRatingCount?: number }[] }
+
+  for (const el of document.querySelectorAll<HTMLElement>('[data-app-store-rating]')) {
+    const { appId, country } = el.dataset
+    const stars = el.querySelector<HTMLElement>('.app-store__stars')
+    const text = el.querySelector<HTMLElement>('[data-rating-text]')
+    const score = el.querySelector<HTMLElement>('[data-rating-score]')
+    const link = el.querySelector<HTMLAnchorElement>('.app-store__rating')
+    if (!appId || !stars || !text || !score || !link) continue
+
+    fetch(
+      `https://itunes.apple.com/lookup?id=${encodeURIComponent(appId)}&country=${encodeURIComponent(country ?? 'us')}`,
+    )
+      .then((response) => (response.ok ? (response.json() as Promise<Lookup>) : null))
+      .then((data) => {
+        const app = data?.results?.[0]
+        const rating = app?.averageUserRating
+        const count = app?.userRatingCount
+        // Keep the placeholder unless there's a real rating to show
+        if (typeof rating !== 'number' || typeof count !== 'number' || count < 1) return
+
+        const shown = rating.toFixed(1)
+        const ratings = `${count.toLocaleString()} ${count === 1 ? 'Rating' : 'Ratings'}`
+        stars.style.setProperty('--rating', String(rating))
+        score.textContent = shown
+        score.hidden = false
+        text.textContent = `${ratings} on the App Store`
+        link.setAttribute('aria-label', `Rated ${shown} out of 5 from ${ratings.toLowerCase()} on the App Store`)
+      })
+      .catch(() => {
+        // Network or API failure: the placeholder link stays, which is still correct
+      })
+  }
+</script>

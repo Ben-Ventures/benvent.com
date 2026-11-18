@@ -1,6 +1,9 @@
 ---
 import Spot from './Spot.astro'
 import BrowserFrame from './BrowserFrame.astro'
+import ThemedImage from './ThemedImage.astro'
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
 
 /**
  * ContentMedia Component
@@ -10,12 +13,25 @@ import BrowserFrame from './BrowserFrame.astro'
  *   phones.
  * - With `imgSrc`: the site's `.media-split`, a screenshot beside the text in two equal columns, presented in a
  *   BrowserFrame.
+ * - With `imgLight` and `imgDark`: the same, with a light and a dark capture that follow the site's theme
+ *   (ThemedImage), optimised by astro:assets and cropped from the top to 4:3.
+ * - With `img`: an imported image (e.g. a brand's designed share card), optimised by astro:assets and shown whole at
+ *   its own aspect ratio, in the same BrowserFrame.
  */
 interface Props {
   /**
    * The source URL for an image (use this or `spot`)
    */
   imgSrc?: string
+  /**
+   * A light and a dark capture of the same screen, shown to match the site's theme (use these instead of `imgSrc`)
+   */
+  imgLight?: ImageMetadata
+  imgDark?: ImageMetadata
+  /**
+   * An imported image shown whole, uncropped (use this instead of `imgSrc` for designed artwork)
+   */
+  img?: ImageMetadata
   /**
    * Alt text for the image; decorative by default
    * @default ''
@@ -32,7 +48,7 @@ interface Props {
   reverseImg?: boolean
 }
 
-const { imgSrc, imgAlt = '', spot, reverseImg = false }: Props = Astro.props
+const { imgSrc, imgLight, imgDark, img, imgAlt = '', spot, reverseImg = false }: Props = Astro.props
 ---
 
 <section class="section">
@@ -50,7 +66,27 @@ const { imgSrc, imgAlt = '', spot, reverseImg = false }: Props = Astro.props
       <div class="container media-split">
         <div class="media-split__media" style={reverseImg ? 'order: 1' : undefined}>
           <BrowserFrame>
-            <img src={imgSrc} alt={imgAlt} loading="lazy" decoding="async" />
+            {imgLight && imgDark ? (
+              <ThemedImage
+                light={imgLight}
+                dark={imgDark}
+                alt={imgAlt}
+                widths={[600, 1200]}
+                sizes="(min-width: 1280px) 34rem, (min-width: 768px) 45vw, 100vw"
+                class="media-split__screen"
+              />
+            ) : img ? (
+              <Image
+                src={img}
+                alt={imgAlt}
+                widths={[600, 1200]}
+                sizes="(min-width: 1280px) 34rem, (min-width: 768px) 45vw, 100vw"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <img src={imgSrc} alt={imgAlt} loading="lazy" decoding="async" />
+            )}
           </BrowserFrame>
         </div>
         <div>

@@ -4,19 +4,33 @@ platform: Ionic
 isFeatured: false
 description: A secure way to record exposures, since firefighting isn't getting any easier.
 sortOrder: 2
-featuredImage: "exposure-tracker.png"
+featuredImage: "exposure-tracker.jpg"
+bannerLight: "../../assets/images/projects/exposure-tracker/banner-light.png"
+bannerDark: "../../assets/images/projects/exposure-tracker/banner-dark.png"
 ---
 
 import BlockQuote from "@components/BlockQuote.astro";
-import BreakoutImage from "@components/BreakoutImage.astro";
-import { Image } from "astro:assets";
 import LinkIcon from '@components/LinkIcon.astro'
+import AppStoreBadge from '@components/AppStoreBadge.astro'
+import ThemedGallery from "@components/ThemedGallery.astro";
+import homeLight from "@assets/images/projects/exposure-tracker/light/01-home.png";
+import homeDark from "@assets/images/projects/exposure-tracker/dark/01-home.png";
+import createLight from "@assets/images/projects/exposure-tracker/light/06-create-exposure.png";
+import createDark from "@assets/images/projects/exposure-tracker/dark/06-create-exposure.png";
+import listLight from "@assets/images/projects/exposure-tracker/light/02-exposure-list.png";
+import listDark from "@assets/images/projects/exposure-tracker/dark/02-exposure-list.png";
+import detailsLight from "@assets/images/projects/exposure-tracker/light/04-exposure-details.png";
+import detailsDark from "@assets/images/projects/exposure-tracker/dark/04-exposure-details.png";
+import mapLight from "@assets/images/projects/exposure-tracker/light/03-exposure-map.png";
+import mapDark from "@assets/images/projects/exposure-tracker/dark/03-exposure-map.png";
+import metricsLight from "@assets/images/projects/exposure-tracker/light/05-metrics.png";
+import metricsDark from "@assets/images/projects/exposure-tracker/dark/05-metrics.png";
 
 ## Project Overview
 
 The IPSDI Exposure Tracker empowers firefighters and first responders to take control of their exposure history with a comprehensive, secure record that stays with them over the course of their career.
 
-Leadership at IPSDI tasked me with designing and building the Exposure Tracker frontends for **iOS, Android, and web**.
+Leadership at IPSDI tasked me with designing and building the frontends for **iOS, Android, and web**.
 
 ## Technical Challenges
 
@@ -24,56 +38,60 @@ The app needed to be **easy to learn** and **simple to use**. That meant auto-sa
 
 We built the product using **Ionic React**, allowing us to deploy the same application across iOS, Android, and web from a single codebase. While this significantly reduced development time, it required solving platform-specific challenges around navigation paradigms, native feature access, and UI consistency.
 
-The app also integrates live analytics data from **IPSDI Analytics** via API. I designed an interface that automatically suggests incidents using existing exposure data, reducing user input and speeding up documentation (examples below).
+The app also integrates live analytics data from **IPSDI Analytics** via API. I designed an interface that automatically suggests incidents using existing exposure data, reducing user input and speeding up documentation.
 
-<div class="gallery">
-  <a href="#img1" class="gallery__link">
-    <Image
-      src="/projects/exposure-tracker/project-image-1.png"
-      alt="Exposure Tracker dashboard showing incident suggestions"
-      width={1200}
-      height={600}
-      class="gallery__img"
-    />
-  </a>
-  <a href="#img2" class="gallery__link">
-    <Image
-      src="/projects/exposure-tracker/project-image-2.png"
-      alt="Exposure entry flow with auto-saved fields"
-      width={1200}
-      height={600}
-      class="gallery__img"
-    />
-  </a>
-  <a href="#img3" class="gallery__link">
-    <Image
-      src="/projects/exposure-tracker/project-image-3.png"
-      alt="Incident detail view with linked exposure data"
-      width={1200}
-      height={600}
-      class="gallery__img"
-    />
-  </a>
-  <a href="#img4" class="gallery__link">
-    <Image
-      src="/projects/exposure-tracker/project-image-4.png"
-      alt="Mobile view of the Exposure Tracker app"
-      width={1200}
-      height={600}
-      class="gallery__img"
-    />
-  </a>
-</div>
+These screenshots match your light or dark theme, the way the app does.
+
+<ThemedGallery
+  portrait
+  idPrefix="exposure"
+  shots={[
+    {
+      light: homeLight,
+      dark: homeDark,
+      alt: "Your records at a glance: the home screen, with totals for exposures, drafts and completed records, and a prompt to finish your profile",
+    },
+    {
+      light: createLight,
+      dark: createDark,
+      alt: "Add exposures in seconds: the Create Exposure form, with location, date and time, exposure types, department and notes, and a Create Draft Exposure button",
+    },
+    {
+      light: listLight,
+      dark: listDark,
+      alt: "Filter and sort exposures: three exposures with their dates and a Draft or Complete badge, below filter and sort controls",
+    },
+    {
+      light: detailsLight,
+      dark: detailsDark,
+      alt: "The details that matter: an exposure's map, location, date, exposure type, department and notes",
+    },
+    {
+      light: mapLight,
+      dark: mapDark,
+      alt: "See exposures on a map: pins over New York, one opened to show its address and a View Exposure button",
+    },
+    {
+      light: metricsLight,
+      dark: metricsDark,
+      alt: "Track totals and trends: a month-by-month chart of exposures over the past year and a ranked list of top exposure types",
+    },
+  ]}
+/>
 
 The new apps launched in November of 2025 and are actively helping firefighters and first responders self-document their exposures.
 
+In November 2026, I added a landing page to the web app at exposure.ipsdi.io. It shows new users the real app, in the same light or dark theme they're already using, with links to the App Store and Google Play.
+
 <div class="link-row">
   <a
-    href="https://i-psdi.org/exposure"
+    href="https://exposure.ipsdi.io"
     target="_blank"
     rel="noopener noreferrer"
-  >More About Exposure Tracker <LinkIcon /></a>
+  >Visit IPSDI Exposure Tracker <LinkIcon /></a>
 </div>
+
+<AppStoreBadge appId="1457260349" url="https://apps.apple.com/us/app/ipsdi-exposure-tracker/id1457260349" />
 
 ## Press & Podcasts
 

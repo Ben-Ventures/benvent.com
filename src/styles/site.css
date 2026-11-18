@@ -90,6 +90,11 @@ ul.grid {
   width: 100%;
 }
 
+/* A tall capture (ContentMedia imgLight/imgDark) shows its top 4:3 in the BrowserFrame, which crops from the top */
+.media-split__media .media-split__screen {
+  aspect-ratio: 4 / 3;
+}
+
 @media (min-width: 768px) {
   .media-split {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -195,6 +200,42 @@ ul.grid {
   object-fit: cover;
 }
 
+/* Tall phone screenshots (ThemedGallery portrait): whole, not cropped, two to a row on phones and three from sm */
+.gallery--portrait {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .gallery--portrait {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.gallery--portrait .gallery__img {
+  aspect-ratio: auto;
+}
+
+/* ---- Light and dark screenshots (ThemedImage) ---------------------------------------------
+ * Hide the capture that doesn't match the active theme, resolved exactly as tokens.css resolves it: <html
+ * data-theme> (the footer toggle) wins, otherwise the OS setting. display: none also takes the hidden one out of the
+ * accessibility tree, and stops a lazy image from loading. */
+:root[data-theme='light'] .theme-image--dark,
+:root[data-theme='dark'] .theme-image--light {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) .theme-image--dark {
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-image--light {
+    display: none;
+  }
+}
+
 /* Spacing around an embed; the iframe itself is the kit's .embed-16x9 (outline from base.css) */
 .video {
   margin-block: var(--space-6) var(--space-4);
@@ -202,6 +243,78 @@ ul.grid {
 
 .link-row {
   margin-block: var(--space-6);
+}
+
+/* Official store badges (e.g. Apple's "Download on the App Store"), used as-is: no underline, outline or hover
+   change, at least 40px tall per Apple's guidelines */
+.store-badge {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.store-badge img {
+  display: block;
+  width: auto;
+  height: 3rem;
+}
+
+/* The badge with the app's live rating beside it (AppStoreBadge), in the App Store's own summary style: the score
+   and stars on one line, the count under them, as tall as the badge. One row on phones too. The placeholder is the
+   same two lines, so nothing below moves when the rating arrives. */
+.app-store {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-block: var(--space-6);
+}
+
+.app-store__rating {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: 3rem;
+  text-decoration: none;
+}
+
+.app-store__summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.app-store__score {
+  font-weight: var(--weight-medium);
+  font-size: var(--text-h3);
+  line-height: 1;
+}
+
+.app-store__stars {
+  display: inline-block;
+  position: relative;
+  color: var(--color-fg-muted);
+  font-size: var(--text-sm);
+  line-height: 1;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.app-store__stars-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--rating) / 5 * 100%);
+  overflow: hidden;
+  color: var(--color-fg);
+}
+
+.app-store__text {
+  color: var(--color-fg-muted);
+  font-size: var(--text-xs);
+  line-height: 1.2;
+}
+
+.app-store__rating:hover .app-store__text {
+  color: inherit;
 }
 
 /* ---- Quote --------------------------------------------------------------------------- */
@@ -255,6 +368,7 @@ ul.grid {
 }
 
 .lightbox img {
+  width: auto; /* overrides a width attribute (ThemedGallery), so a tall image shrinks to fit inside its outline */
   max-height: 100%;
   object-fit: contain;
 }

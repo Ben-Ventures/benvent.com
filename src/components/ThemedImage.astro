@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets'
+import type { ImageMetadata } from 'astro'
+
+/**
+ * ThemedImage Component
+ *
+ * @description A screenshot with a light and a dark capture that follows the site's active theme: the OS setting,
+ * or the footer's theme toggle when it forces one (`<html data-theme>`). Both captures are rendered and the
+ * `.theme-image--light|dark` rules in site.css hide the one that doesn't match, with `display: none`, so only one is
+ * visible and announced to screen readers. Lazy by default, so browsers fetch only the visible capture, and the other
+ * one only if the visitor switches theme. A `<picture media="(prefers-color-scheme)">` can't follow the toggle.
+ */
+interface Props {
+  light: ImageMetadata
+  dark: ImageMetadata
+  /**
+   * Describes both captures (they show the same screen)
+   */
+  alt: string
+  /**
+   * Classes for both <img> elements
+   */
+  class?: string
+  /**
+   * Passed to astro:assets <Image>
+   */
+  widths?: number[]
+  sizes?: string
+  width?: number
+  loading?: 'lazy' | 'eager'
+}
+
+const { light, dark, alt, class: className, widths, sizes, width, loading = 'lazy' } = Astro.props
+const shared = { alt, widths, sizes, width, loading, decoding: 'async' as const }
+---
+
+<Image src={light} {...shared} class:list={[className, 'theme-image--light']} />
+<Image src={dark} {...shared} class:list={[className, 'theme-image--dark']} />

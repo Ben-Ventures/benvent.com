@@ -1,0 +1,62 @@
+---
+import type { ImageMetadata } from 'astro'
+import ThemedImage from './ThemedImage.astro'
+
+/**
+ * ThemedGallery Component
+ *
+ * @description The project gallery (`.gallery`, thumbnails that open a CSS `:target` lightbox) for screenshots that
+ * come in a light and a dark capture. Each thumbnail and lightbox shows the capture that matches the site's active
+ * theme (see ThemedImage). It renders its own lightboxes, so the project page's generic ones (from
+ * `public/projects/<id>/project-image-N.png`) aren't needed. `portrait` lays out tall phone screenshots uncropped,
+ * three to a row.
+ */
+interface Shot {
+  light: ImageMetadata
+  dark: ImageMetadata
+  alt: string
+}
+
+interface Props {
+  shots: Shot[]
+  /**
+   * Prefix for the lightbox ids (`#<idPrefix>-1`, …), unique on the page
+   * @default 'shot'
+   */
+  idPrefix?: string
+  /**
+   * Tall phone screenshots: show them whole instead of cropped to 2:1
+   * @default false
+   */
+  portrait?: boolean
+}
+
+const { shots, idPrefix = 'shot', portrait = false } = Astro.props
+---
+
+<div class:list={['gallery', { 'gallery--portrait': portrait }]}>
+  {
+    shots.map((shot, i) => (
+      <a href={`#${idPrefix}-${i + 1}`} class="gallery__link">
+        <ThemedImage
+          light={shot.light}
+          dark={shot.dark}
+          alt={shot.alt}
+          widths={portrait ? [320, 640] : [600, 1200]}
+          sizes={portrait ? '(min-width: 640px) 14rem, 50vw' : '(min-width: 640px) 22rem, 100vw'}
+          class="gallery__img"
+        />
+      </a>
+    ))
+  }
+</div>
+{
+  shots.map((shot, i) => (
+    <div id={`${idPrefix}-${i + 1}`} class="lightbox">
+      <a href="#_" class="lightbox__close">
+        Close
+      </a>
+      <ThemedImage light={shot.light} dark={shot.dark} alt={shot.alt} width={Math.min(shot.light.width, 1200)} />
+    </div>
+  ))
+}
