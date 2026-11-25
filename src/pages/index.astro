@@ -7,8 +7,8 @@ import FeaturedProjects from '@components/FeaturedProjects.astro'
 import ContentMedia from '@components/ContentMedia.astro'
 import ThemedImage from '@components/ThemedImage.astro'
 import exposureShareCard from '@assets/images/projects/exposure-tracker.jpg'
-import exposureMapLight from '@assets/images/projects/exposure-tracker/light/03-exposure-map.png'
-import exposureMapDark from '@assets/images/projects/exposure-tracker/dark/03-exposure-map.png'
+import exposureLogoLight from '@assets/images/projects/exposure-tracker/app-store/logo-light.png'
+import exposureLogoDark from '@assets/images/projects/exposure-tracker/app-store/logo-dark.png'
 import { contactLabel, enquiryHref } from '../data/contact'
 
 /* Each offering shows one real artefact from shipped work, linked to its case study. `focus` is the crop's
@@ -25,31 +25,31 @@ const offerings: Offering[] = [
   {
     title: 'Development',
     text: 'Clean, fast, and accessible code from a product engineer trusted by companies of all sizes.',
-    project: { name: 'SVPLY CHVN', href: '/portfolio/svply-chvn/' },
-    src: '/projects/svply-chvn/project-image-3.png',
-    width: 1200,
-    height: 597,
-    focus: '20% center',
-    alt: 'The SVPLY CHVN album cover sliding aside to reveal a spinning vinyl record, rebuilt in CSS',
+    project: { name: 'IPSDI Exposure Tracker', href: '/portfolio/exposure-tracker/' },
+    light: exposureLogoLight,
+    dark: exposureLogoDark,
+    focus: 'center',
+    alt: 'The Exposure Tracker logo and the line “Your personal exposure record”, from its App Store listing',
   },
   {
     title: 'UX',
     text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
-    project: { name: 'Everglades Experiences', href: '/portfolio/everglades-experiences/' },
-    src: '/projects/everglades-experiences/project-image-2.png',
+    project: { name: 'To The Moon!', href: '/portfolio/to-the-moon/' },
+    src: '/projects/to-the-moon/project-image-1.png',
     width: 1200,
-    height: 844,
-    focus: 'top center',
-    alt: 'Everglades Experiences shop page with an anchored sub-navigation above a row of wildlife prints',
+    height: 842,
+    focus: 'center 30%',
+    alt: 'To The Moon homepage with the logo on a starfield above a reflective bomber jacket drop',
   },
   {
     title: 'Design',
     text: 'Wireframes, mockups, and design systems crafted for your unique brand identity.',
-    project: { name: 'IPSDI Exposure Tracker', href: '/portfolio/exposure-tracker/' },
-    light: exposureMapLight,
-    dark: exposureMapDark,
-    focus: 'center 35%',
-    alt: 'Exposure Tracker app screen with saved exposures pinned on a map',
+    project: { name: 'The Nippies', href: '/portfolio/nippies/' },
+    src: '/projects/nippies/project-image-1.png',
+    width: 1200,
+    height: 557,
+    focus: 'center',
+    alt: 'The Nippies landing page with a hand-drawn character in an ornate gold frame',
   },
 ]
 
