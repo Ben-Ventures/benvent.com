@@ -597,3 +597,11 @@ ul.grid {
     aspect-ratio: 2 / 1;
   }
 }
+
+/* 12. The nav links sit on the wordmark's baseline. The lockup's lettering is in the bottom of the SVG (its baseline
+   is the SVG's bottom edge), so centring the links against the whole SVG left them visibly higher than
+   "ben ventures". Baseline alignment lines the link text up with the lettering at every width. */
+.site-header__inner {
+  align-items: baseline;
+  padding-top: calc((var(--header-h) - var(--tap-min)) / 2);
+}
