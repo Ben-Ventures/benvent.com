@@ -12,6 +12,7 @@ const projects = defineCollection({
       title: z.string(),
       platform: z.string(),
       isFeatured: z.boolean().default(false),
+      isHidden: z.boolean().default(false), // kept in the repo but left out of every page, list and the sitemap
       sortOrder: z.number(),
       description: z.string(),
       featuredImage: z.string(),

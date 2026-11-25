@@ -7,7 +7,7 @@ import type { GetStaticPaths, ImageMetadata, Page } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const projects = await getCollection('projects')
+  const projects = await getCollection('projects', ({ data }) => !data.isHidden)
 
   // Dynamically import all images from the projects folder
   const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/projects/*.{png,jpg,jpeg,webp}', {
