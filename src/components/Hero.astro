@@ -11,7 +11,7 @@ import { contactLabel, enquiryHref } from '../data/contact'
  *
  * @description Home page hero on the kit's .hero__split: the page's one display headline, a plain factual line
  * about what Ben does, one primary action with a quieter contact link, and a proof point (a named client project
- * and its result, with two iPhone screenshots (exposure details and map) from the App Store brand kit, light and dark; never the iPad ones) that links to the case study. The proof sits beside the text from 768px and as a compact row
+ * and its result, with two iPhone screenshots (exposure details and map) from the App Store brand kit, light and dark; never the iPad ones) that links to the case study. The proof sits beside the text from 768px and as a full-width showcase
  * under the actions on phones, so it is on the first screen at every size.
  *
  * Audience variant: visitors who arrive from a founder-focused link (`?for=founder`, or a utm_campaign /
@@ -78,7 +78,7 @@ const randomMessage = heroMessages[Math.floor(Math.random() * heroMessages.lengt
                 dark={dark}
                 alt=""
                 widths={[200, 400, 700]}
-                sizes="(min-width: 1280px) 15rem, (min-width: 768px) 20vw, 7rem"
+                sizes="(min-width: 1280px) 15rem, (min-width: 768px) 20vw, 50vw"
                 loading="eager"
                 class="media-bare"
               />
@@ -179,29 +179,33 @@ const randomMessage = heroMessages[Math.floor(Math.random() * heroMessages.lengt
     font-size: var(--text-sm);
   }
 
-  /* Phones: a compact row under the actions (thumbnail + caption), so the proof is on the first screen */
+  /* Phones: less space above the headline, and the proof as a full-width showcase under the actions: both phones
+     side by side in a 2:1 crop, the caption below, so it reads as the example rather than a footnote and still lands
+     on the first screen */
   @media (max-width: 767.98px) {
+    .hero {
+      padding-top: var(--space-6);
+    }
+
+    .hero__summary {
+      margin-bottom: var(--space-5);
+    }
+
     .hero-proof {
-      display: grid;
-      grid-template-columns: 7rem minmax(0, 1fr);
-      align-items: center;
       justify-self: stretch;
       order: 1;
-      gap: var(--space-4);
       width: 100%;
     }
 
-    .hero-proof__text {
-      margin-top: 0;
-    }
-
-    /* One phone in the thumbnail */
     .hero-proof__media {
-      grid-template-columns: minmax(0, 1fr);
+      aspect-ratio: 2 / 1;
     }
 
-    .hero-proof__shot + .hero-proof__shot {
-      display: none;
+    .hero-proof__text {
+      display: flex;
+      column-gap: var(--space-2);
+      flex-wrap: wrap;
+      align-items: baseline;
     }
   }
 </style>
