@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro'
+import { contactLabel, enquiryHref } from '../data/contact'
 
 /**
  * Footer Component
@@ -16,7 +17,7 @@ const currentYear = new Date().getFullYear()
     </a>
     <p>&copy; {currentYear} Ben Ventures LLC, a New York company.</p>
     <ul>
-      <li><a href="mailto:ben@benvent.com">Email</a></li>
+      <li><a href={enquiryHref()}>{contactLabel}</a></li>
       <li><a href="/sitemap/">Sitemap</a></li>
       <li>
         <button class="link-button" type="button" id="theme-toggle">Theme: system</button>
