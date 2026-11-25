@@ -28,7 +28,7 @@ interface Props {
 const { eyebrow, limit = 3, title = 'Selected work' } = Astro.props
 
 // Get projects from content collection
-const projects = await getCollection('projects')
+const projects = await getCollection('projects', ({ data }) => !data.isHidden)
 
 // Dynamically import all images from the projects folder
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/projects/*.{png,jpg,jpeg,webp}', {

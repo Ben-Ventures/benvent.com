@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets'
 import DefaultLayout from '@layouts/DefaultLayout.astro'
+import { contactLabel, enquiryHref } from '../data/contact'
 import PageHeader from '@components/PageHeader.astro'
 import BlockQuote from '@components/BlockQuote.astro'
 import headshot from '@assets/images/headshot.jpg'
@@ -143,11 +144,7 @@ const aiRange = [
     <div class="container">
       <h2 class="closing">Let's Get to Work.</h2>
       <div class="btn-row">
-        <a
-          class="btn btn--primary"
-          href="mailto:ben@benvent.com?subject=Project%20Inquiry&body=Hi%20Ben%2C%0A%0AI%27d%20like%20to%20discuss%20a%20project.%20Here%27s%20what%20I%27m%20looking%20for%3A%0A%0A"
-          >Email Ben</a
-        >
+        <a class="btn btn--primary" href={enquiryHref()}>{contactLabel}</a>
       </div>
     </div>
   </section>
