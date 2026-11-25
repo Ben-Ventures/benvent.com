@@ -7,8 +7,8 @@ import FeaturedProjects from '@components/FeaturedProjects.astro'
 import ContentMedia from '@components/ContentMedia.astro'
 import ThemedImage from '@components/ThemedImage.astro'
 import exposureShareCard from '@assets/images/projects/exposure-tracker.jpg'
-import nippiesDirectory from '@assets/images/offerings/nippies-directory.png'
 import moonProducts from '@assets/images/offerings/to-the-moon-products.png'
+import moonSearch from '@assets/images/offerings/to-the-moon-search.png'
 import exposureLandingLight from '@assets/images/offerings/exposure-tracker-landing-light.png'
 import exposureLandingDark from '@assets/images/offerings/exposure-tracker-landing-dark.png'
 import { contactLabel, enquiryHref } from '../data/contact'
@@ -28,18 +28,18 @@ const offerings: Offering[] = [
   {
     title: 'Development',
     text: 'Clean, fast, and accessible code from a product engineer trusted by companies of all sizes.',
-    project: { name: 'The Nippies', href: '/portfolio/nippies/' },
-    src: nippiesDirectory,
+    project: { name: 'To The Moon!', href: '/portfolio/to-the-moon/' },
+    src: moonProducts,
     focus: 'center top',
-    alt: 'The Nippies directory with Alphabetize and Show BitNips controls above a grid of hand-drawn characters',
+    alt: 'To The Moon products page with availability and price filters, sorting, and a grid of tees and a tote bag',
   },
   {
     title: 'UX',
     text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
     project: { name: 'To The Moon!', href: '/portfolio/to-the-moon/' },
-    src: moonProducts,
+    src: moonSearch,
     focus: 'center top',
-    alt: 'To The Moon products page with availability and price filters, sorting, and a grid of tees and a tote bag',
+    alt: 'To The Moon search showing suggestions and matching products with thumbnails as “alien” is typed',
   },
   {
     title: 'Design',
