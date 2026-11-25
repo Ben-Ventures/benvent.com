@@ -34,14 +34,6 @@ const offerings: Offering[] = [
     alt: 'To The Moon products page with availability and price filters, sorting, and a grid of tees and a tote bag',
   },
   {
-    title: 'UX',
-    text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
-    project: { name: 'Everglades Experiences', href: '/portfolio/everglades-experiences/' },
-    src: evergladesPrints,
-    focus: 'center top',
-    alt: 'Everglades Experiences prints page with an anchored sub-navigation above a row of featured wildlife prints',
-  },
-  {
     title: 'Design',
     text: 'Wireframes, mockups, and design systems crafted for your unique brand identity.',
     project: { name: 'IPSDI Exposure Tracker', href: '/portfolio/exposure-tracker/' },
@@ -49,6 +41,14 @@ const offerings: Offering[] = [
     dark: exposureLandingDark,
     focus: 'center',
     alt: 'Exposure Tracker landing page with sign up and log in beside two phones showing an exposure on a map',
+  },
+  {
+    title: 'UX',
+    text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
+    project: { name: 'Everglades Experiences', href: '/portfolio/everglades-experiences/' },
+    src: evergladesPrints,
+    focus: 'center top',
+    alt: 'Everglades Experiences prints page with an anchored sub-navigation above a row of featured wildlife prints',
   },
 ]
 
@@ -60,7 +60,7 @@ const jsonLd = {
   name: 'Ben Ventures',
   url: site.href,
   email: 'ben@benvent.com',
-  description: 'Ben builds Shopify, React and mobile sites for small companies, from first setup to design systems.',
+  description: 'A design and development studio for applications.',
   address: { '@type': 'PostalAddress', addressRegion: 'NY', addressCountry: 'US' },
   founder: { '@type': 'Person', name: 'Ben' },
   makesOffer: offerings
