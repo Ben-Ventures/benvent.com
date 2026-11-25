@@ -8,7 +8,7 @@ import ContentMedia from '@components/ContentMedia.astro'
 import ThemedImage from '@components/ThemedImage.astro'
 import exposureShareCard from '@assets/images/projects/exposure-tracker.jpg'
 import moonProducts from '@assets/images/offerings/to-the-moon-products.png'
-import evergladesPrints from '@assets/images/offerings/everglades-prints.png'
+import evergladesTours from '@assets/images/offerings/everglades-private-tours.png'
 import exposureLandingLight from '@assets/images/offerings/exposure-tracker-landing-light.png'
 import exposureLandingDark from '@assets/images/offerings/exposure-tracker-landing-dark.png'
 import { contactLabel, enquiryHref } from '../data/contact'
@@ -26,14 +26,6 @@ type Offering = {
 
 const offerings: Offering[] = [
   {
-    title: 'Development',
-    text: 'Clean, fast, and accessible code from a product engineer trusted by companies of all sizes.',
-    project: { name: 'To The Moon!', href: '/portfolio/to-the-moon/' },
-    src: moonProducts,
-    focus: 'center top',
-    alt: 'To The Moon products page with availability and price filters, sorting, and a grid of tees and a tote bag',
-  },
-  {
     title: 'Design',
     text: 'Wireframes, mockups, and design systems crafted for your unique brand identity.',
     project: { name: 'IPSDI Exposure Tracker', href: '/portfolio/exposure-tracker/' },
@@ -43,12 +35,20 @@ const offerings: Offering[] = [
     alt: 'Exposure Tracker landing page with sign up and log in beside two phones showing an exposure on a map',
   },
   {
+    title: 'Development',
+    text: 'Clean, fast, and accessible code from a product engineer trusted by companies of all sizes.',
+    project: { name: 'To The Moon!', href: '/portfolio/to-the-moon/' },
+    src: moonProducts,
+    focus: 'center top',
+    alt: 'To The Moon products page with availability and price filters, sorting, and a grid of tees and a tote bag',
+  },
+  {
     title: 'UX',
     text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
     project: { name: 'Everglades Experiences', href: '/portfolio/everglades-experiences/' },
-    src: evergladesPrints,
+    src: evergladesTours,
     focus: 'center top',
-    alt: 'Everglades Experiences prints page with an anchored sub-navigation above a row of featured wildlife prints',
+    alt: 'Everglades Experiences Python Tours page: the Private Tours section under an anchored sub-navigation, with a sticky Book a Python Tour bar',
   },
 ]
 
