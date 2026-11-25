@@ -4,9 +4,8 @@ import Logo from './Logo.astro'
 /**
  * Header Component
  *
- * @description Sticky site header: logo home link and main navigation. The links stay visible at every width;
- * below 768px the Home item is dropped because the logo is the Home link (site.css override 9, in place of the kit's
- * "Menu" panel, docs/brand/WEB.md §7).
+ * @description Sticky site header with a permanent 2px bottom edge: logo home link and main navigation. Below
+ * 768px the navigation collapses behind a "Menu" text button into a full-screen panel (docs/brand/WEB.md §7).
  */
 const links = [
   { href: '/', label: 'Home' },
@@ -24,11 +23,12 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
       <Logo variant="lockup" class="logo-full" />
       <Logo variant="mark" class="logo-compact" />
     </a>
+    <button class="site-nav__toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav id="site-nav" class="site-nav" aria-label="Main">
       <ul>
         {
           links.map(({ href, label }) => (
-            <li class={href === '/' ? 'site-nav__item--home' : undefined}>
+            <li>
               <a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
                 {label}
               </a>
@@ -39,3 +39,32 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     </nav>
   </div>
 </header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.site-nav__toggle')
+  const nav = document.getElementById('site-nav')
+
+  if (toggle && nav) {
+    const setOpen = (open: boolean, moveFocus = false) => {
+      toggle.setAttribute('aria-expanded', String(open))
+      toggle.textContent = open ? 'Close' : 'Menu'
+      nav.toggleAttribute('data-open', open)
+      document.documentElement.classList.toggle('menu-open', open)
+      if (open && moveFocus) nav.querySelector('a')?.focus()
+    }
+
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true', true))
+    nav.addEventListener('click', (event) => {
+      if ((event.target as Element).closest('a')) setOpen(false)
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false)
+        toggle.focus()
+      }
+    })
+    matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
+      if (event.matches) setOpen(false)
+    })
+  }
+</script>

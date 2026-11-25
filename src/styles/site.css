@@ -421,7 +421,7 @@ ul.grid {
   }
 
   /* 2. The hero's art slot holds a proof point (a client screenshot and its result, Hero.astro), not a spot. On
-     phones it is a compact row under the actions instead of the kit's 160px spot above the headline. */
+     phones it is a full-width showcase under the actions instead of the kit's 160px spot above the headline. */
 }
 
 /* 3. The hero has one filled button and a text link beside it. On phones they share one row instead of the kit's
@@ -510,37 +510,6 @@ ul.grid {
   color: var(--bv-yellow);
 }
 
-/* 9. The header shows Portfolio and About as links at every width. Below 768px the kit hides all three behind a
-   "Menu" button (WEB.md §7); three links is few enough to show, so phones get the same route as tablet. The logo is
-   the Home link, so the Home item is dropped below 768px to make room (it fits down to 320px with the mark). */
-@media (max-width: 767.98px) {
-  .site-nav {
-    display: block;
-    position: static;
-    padding: 0;
-    overflow: visible;
-  }
-
-  .site-nav ul {
-    flex-direction: row;
-    gap: var(--space-5);
-  }
-
-  .site-nav li {
-    border-bottom: 0;
-  }
-
-  .site-nav a {
-    width: auto;
-    min-height: var(--tap-min);
-    font-size: var(--text-base);
-  }
-
-  .site-nav__item--home {
-    display: none;
-  }
-}
-
 /* 10. Dark mode: card edges use --color-border (#7A746A, 3.15:1 against the #2C2827 card fill) instead of the kit's
    decorative #57504D (1.85:1), so the card edges read. */
 @media (prefers-color-scheme: dark) {
@@ -551,12 +520,6 @@ ul.grid {
 
 :root[data-theme='dark'] .card {
   border-color: var(--color-border);
-}
-
-/* 11. Card body copy sits at 1.5 line height (the kit's body is 1.6), so three stacked cards take less of a phone
-   screen. */
-.card p {
-  line-height: 1.5;
 }
 
 /* ---- Offerings: each card shows a real artefact from shipped work ---------------------------------------------
@@ -596,12 +559,4 @@ ul.grid {
   .offerings .card__media {
     aspect-ratio: 2 / 1;
   }
-}
-
-/* 12. The nav links sit on the wordmark's baseline. The lockup's lettering is in the bottom of the SVG (its baseline
-   is the SVG's bottom edge), so centring the links against the whole SVG left them visibly higher than
-   "ben ventures". Baseline alignment lines the link text up with the lettering at every width. */
-.site-header__inner {
-  align-items: baseline;
-  padding-top: calc((var(--header-h) - var(--tap-min)) / 2);
 }
