@@ -1,7 +1,7 @@
 ---
 import ThemedImage from './ThemedImage.astro'
-import homeLight from '@assets/images/projects/exposure-tracker/app-store/iphone-home-light.png'
-import homeDark from '@assets/images/projects/exposure-tracker/app-store/iphone-home-dark.png'
+import detailsLight from '@assets/images/projects/exposure-tracker/app-store/iphone-details-light.png'
+import detailsDark from '@assets/images/projects/exposure-tracker/app-store/iphone-details-dark.png'
 import mapLight from '@assets/images/projects/exposure-tracker/app-store/iphone-map-light.png'
 import mapDark from '@assets/images/projects/exposure-tracker/app-store/iphone-map-dark.png'
 import { contactLabel, enquiryHref } from '../data/contact'
@@ -11,7 +11,7 @@ import { contactLabel, enquiryHref } from '../data/contact'
  *
  * @description Home page hero on the kit's .hero__split: the page's one display headline, a plain factual line
  * about what Ben does, one primary action with a quieter contact link, and a proof point (a named client project
- * and its result, with two iPhone screenshots from the App Store brand kit, light and dark; never the iPad ones) that links to the case study. The proof sits beside the text from 768px and as a compact row
+ * and its result, with two iPhone screenshots (exposure details and map) from the App Store brand kit, light and dark; never the iPad ones) that links to the case study. The proof sits beside the text from 768px and as a compact row
  * under the actions on phones, so it is on the first screen at every size.
  *
  * Audience variant: visitors who arrive from a founder-focused link (`?for=founder`, or a utm_campaign /
@@ -69,7 +69,7 @@ const randomMessage = heroMessages[Math.floor(Math.random() * heroMessages.lengt
       <span class="hero-proof__media">
         {
           [
-            [homeLight, homeDark],
+            [detailsLight, detailsDark],
             [mapLight, mapDark],
           ].map(([light, dark]) => (
             <span class="hero-proof__shot">
