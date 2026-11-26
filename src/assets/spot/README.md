@@ -8,6 +8,7 @@ tokens, so the art flips between light and dark with the rest of the page.
 | `advise.inline.svg` | Two speech bubbles: a question, and a cyan reply with a check |
 | `coming-soon.inline.svg` | Tablet and phone showing a simple page with a cyan button |
 | `legacy-site.inline.svg` | A browser window stuck loading: spinner and grey placeholder bars |
+| `site-rescue.inline.svg` | **Site-only, not in the kit yet.** The old window stuck loading, behind a clean new page with the one cyan button (the home hero) |
 
 - Size with CSS: they fill their container up to 400px (`.spot`). Square, 1:1.
 - Each has `role="img"` and an `aria-label`. If one is purely decorative next to text that says the same
