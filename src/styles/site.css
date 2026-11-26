@@ -494,10 +494,11 @@ ul.grid {
   border-bottom: 0;
 }
 
-/* 8. The closing "Let's Get to Work." heading gets the reserved yellow. In dark mode the text is yellow (13.9:1 on
+/* 8. The closing "Let's Get to Work." heading and the hero headline's answer (.highlight) get the reserved yellow. In dark mode the text is yellow (13.9:1 on
    Ink). Yellow text on Paper is 1.04:1, so in light mode the Ink text gets a yellow highlighter stroke behind it
    instead (Ink on yellow 13.9:1). The kit only allows yellow for text selection. */
-.section--closing h2 {
+.section--closing h2,
+.highlight {
   display: inline;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -510,13 +511,15 @@ ul.grid {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section--closing h2 {
+  :root:not([data-theme='light']) .section--closing h2,
+  :root:not([data-theme='light']) .highlight {
     background-image: none;
     color: var(--bv-yellow);
   }
 }
 
-:root[data-theme='dark'] .section--closing h2 {
+:root[data-theme='dark'] .section--closing h2,
+:root[data-theme='dark'] .highlight {
   background-image: none;
   color: var(--bv-yellow);
 }
