@@ -17,6 +17,11 @@ interface Props {
   platform: string
   image?: ImageMetadata
   /**
+   * CSS object-position for the screenshot's crop in the 16:10 slot (default: top, centred). Wide artwork whose
+   * text sits near one edge, like a share card, can anchor that side so phones don't cut into it.
+   */
+  imagePosition?: string
+  /**
    * A short label shown as the kit's magenta badge after the title, e.g. "Latest"
    */
   badge?: string
@@ -27,7 +32,7 @@ interface Props {
   headingLevel?: 'h2' | 'h3'
 }
 
-const { href, title, description, platform, image, badge, headingLevel: Heading = 'h3' } = Astro.props
+const { href, title, description, platform, image, imagePosition, badge, headingLevel: Heading = 'h3' } = Astro.props
 ---
 
 <a class="card" href={href}>
@@ -35,7 +40,14 @@ const { href, title, description, platform, image, badge, headingLevel: Heading 
     {
       image ? (
         <BrowserFrame variant="card">
-          <Image src={image} alt="" widths={[400, 800]} sizes="(min-width: 1024px) 400px, 100vw" loading="lazy" />
+          <Image
+            src={image}
+            alt=""
+            widths={[400, 800]}
+            sizes="(min-width: 1024px) 400px, 100vw"
+            loading="lazy"
+            style={imagePosition ? `object-position: ${imagePosition}` : undefined}
+          />
         </BrowserFrame>
       ) : (
         <span class="card__placeholder">{title}</span>
