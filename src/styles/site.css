@@ -561,6 +561,84 @@ ul.grid {
   flex: 1;
 }
 
+/* 9. Light / dark mode: the OS setting decides until the visitor picks one with a sun / moon icon button in the
+   header bar (after the links from 768px, beside "Menu" on phones), instead of the kit's three-way text toggle in
+   the footer (WEB.md §2). The moon shows in light mode and the sun in dark, swapped by the .theme-image--* rules. */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.theme-toggle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  width: var(--tap-min);
+  height: var(--tap-min);
+  color: inherit;
+}
+
+.theme-toggle svg {
+  width: 1.375rem;
+  height: 1.375rem;
+}
+
+.theme-toggle:hover {
+  color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .site-header__actions {
+    gap: var(--space-5);
+  }
+
+  .theme-toggle {
+    margin-right: calc((var(--tap-min) - 1.375rem) / -2);
+  }
+}
+
+/* 10. Dark mode: card edges use --color-border (#7A746A, 3.15:1 against the #2C2827 card fill) instead of the kit's
+   decorative #57504D (1.85:1), so the card edges read. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .card {
+    border-color: var(--color-border);
+  }
+}
+
+:root[data-theme='dark'] .card {
+  border-color: var(--color-border);
+}
+
+/* ---- Offerings: three short info cards ---------------------------------------------------------------------
+   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). */
+.offerings {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  max-width: none;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .offerings {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.offerings > li {
+  display: flex;
+}
+
+.offerings .card {
+  flex: 1;
+}
+
 /* 9. Light mode by default, whatever the OS prefers: <html data-theme="light"> is set in DefaultLayout, so the kit's
    prefers-color-scheme rules never apply; dark mode is opt-in from the header's "Dark mode" button (the kit follows
    the OS and puts a three-way toggle in the footer, WEB.md §2). The button sits in the nav like a link, and in the

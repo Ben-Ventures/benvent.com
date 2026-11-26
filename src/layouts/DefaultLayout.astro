@@ -16,22 +16,25 @@ const {
 } = Astro.props
 ---
 
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#F4F1EA" />
+    <meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#231F20" media="(prefers-color-scheme: dark)" />
     <script is:inline>
-      /* Light by default, whatever the OS prefers. A visitor who picks dark in the menu keeps it (stored per browser
-         under "bv-theme"). Runs before first paint so the page doesn't flash. */
+      /* The OS setting picks light or dark until the visitor chooses with the header's sun / moon button (stored
+         per browser under "bv-theme"). Runs before first paint so the page doesn't flash. */
       ;(function () {
         var t = null
         try {
           t = localStorage.getItem('bv-theme')
         } catch (e) {}
-        if (t === 'dark') {
-          document.documentElement.dataset.theme = 'dark'
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#231F20')
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.dataset.theme = t
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute('content', t === 'dark' ? '#231F20' : '#F4F1EA')
+          })
         }
       })()
     </script>
