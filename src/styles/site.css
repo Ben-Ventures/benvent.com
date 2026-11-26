@@ -427,13 +427,9 @@ ul.grid {
   .split__art {
     width: 15rem;
   }
-
-  /* 2. The hero spot stays hidden on phones: Ben wants the headline and buttons alone there. The kit (1.16) shows
-     it at 160px above the headline. From 768px it sits beside the headline, as the kit has it. */
-  .hero__art {
-    display: none;
-  }
 }
+
+/* 2. Retired: the hero no longer has a spot illustration at any size. */
 
 /* 3. The hero has one filled button and a text link beside it. On phones they share one row instead of the kit's
    full-width stack (WEB.md §7, Buttons: "below 640px, buttons in a .btn-row go full width"). */
@@ -536,31 +532,6 @@ ul.grid {
   border-color: var(--color-border);
 }
 
-/* ---- Offerings: three short info cards ---------------------------------------------------------------------
-   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). */
-.offerings {
-  display: grid;
-  gap: var(--space-6);
-  margin: 0;
-  padding: 0;
-  max-width: none;
-  list-style: none;
-}
-
-@media (min-width: 768px) {
-  .offerings {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-.offerings > li {
-  display: flex;
-}
-
-.offerings .card {
-  flex: 1;
-}
-
 /* 9. Light / dark mode: the OS setting decides until the visitor picks one, instead of the kit's three-way text
    toggle in the footer (WEB.md §2). From 768px a sun / moon icon button follows the links (the moon shows in light
    mode and the sun in dark, swapped by the .theme-image--* rules). On phones it lives at the bottom of the Menu
@@ -635,5 +606,13 @@ ul.grid {
 
   .theme-toggle:hover {
     color: var(--color-accent);
+  }
+}
+
+/* 11. On phones, work cards drop the browser frame's title bar (the three dots) so the screenshot reads directly
+   and the card is quieter. From 768px the full frame shows, as the kit has it. */
+@media (max-width: 767.98px) {
+  .card .browser-frame .browser-frame__bar {
+    display: none;
   }
 }

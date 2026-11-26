@@ -3,22 +3,21 @@ import DefaultLayout from '@layouts/DefaultLayout.astro'
 import Hero from '@components/Hero.astro'
 import FeaturedProjects from '@components/FeaturedProjects.astro'
 import ContentMedia from '@components/ContentMedia.astro'
-import exposureShareCard from '@assets/images/projects/exposure-tracker.jpg'
 import { contactLabel, enquiryHref } from '../data/contact'
 
-const offerings = [
-  {
-    title: 'Design',
-    text: 'Wireframes, mockups, and design systems crafted for your unique brand identity.',
-  },
-  {
-    title: 'UX',
-    text: 'Simplify your website and remove friction so visitors can find what they need instantly.',
-  },
-  {
-    title: 'Development',
-    text: 'Clean, fast, and accessible code from a product engineer trusted by companies of all sizes.',
-  },
+/* What Ben offers. Not shown as cards (the two problem-led sections below say it in the client's words); kept here
+   for the structured data, so search engines and AI assistants can still name each service. */
+const services = [
+  { title: 'Design', text: 'Wireframes, mockups and design systems built around your brand, not a template.' },
+  { title: 'UX', text: 'Simpler sites with less friction, so visitors find what they need straight away.' },
+  { title: 'Development', text: 'Clean, fast, accessible code from a product engineer.' },
+]
+
+/* How Ben works: the three Instinctive Design pillars, in the visitor's terms */
+const pillars = [
+  { tag: 'Uniqueness', line: 'Your site should look like you, not like a template.' },
+  { tag: 'Intuitiveness', line: 'Nobody should need instructions to use it.' },
+  { tag: 'Tailoring', line: 'It should meet every visitor where they are.' },
 ]
 
 /* Structured data: the business, what it offers, and its featured work */
@@ -31,7 +30,7 @@ const jsonLd = {
   email: 'ben@benvent.com',
   address: { '@type': 'PostalAddress', addressRegion: 'NY', addressCountry: 'US' },
   founder: { '@type': 'Person', name: 'Ben' },
-  makesOffer: offerings
+  makesOffer: services
     .map(({ title, text }) => ({
       '@type': 'Offer',
       itemOffered: { '@type': 'Service', name: title, description: text },
@@ -59,31 +58,18 @@ const jsonLd = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Hero />
 
-  <ContentMedia
-    img={exposureShareCard}
-    imgAlt="IPSDI Exposure Tracker: “Firefighting isn’t getting any easier. Documenting your exposures is.” beside a phone showing saved exposures on a map"
-  >
-    <h2>Spotlight: IPSDI Exposure Tracker</h2>
-    <p class="lead">
-      A cross-platform application built for firefighters and first responders to securely document exposures,
-      incidents, and long-term health risks.
-    </p>
-    <div class="btn-row">
-      <a class="btn btn--primary" href="/portfolio/exposure-tracker/">View Case Study</a>
-    </div>
-  </ContentMedia>
+  <FeaturedProjects title="Portfolio" lead="exposure-tracker" />
 
-  <section class="section">
+  <section class="band" aria-labelledby="principle">
     <div class="container">
-      <h2 class="section-head">My Offerings</h2>
-      <ul class="offerings">
+      <span class="badge">How I Work</span>
+      <h2 class="band__statement" id="principle">Instinctive Design</h2>
+      <ul class="pillars">
         {
-          offerings.map((offering) => (
+          pillars.map(({ tag, line }) => (
             <li>
-              <div class="card">
-                <h3>{offering.title}</h3>
-                <p class="muted">{offering.text}</p>
-              </div>
+              <strong>{tag}</strong>
+              <span>{line}</span>
             </li>
           ))
         }
@@ -91,29 +77,19 @@ const jsonLd = {
     </div>
   </section>
 
-  <section class="band" aria-labelledby="principle">
-    <div class="container">
-      <span class="badge">Guiding Principle</span>
-      <h2 class="band__statement" id="principle">Instinctive Design</h2>
-      <p class="band__note">Every product is unique and every interaction is intuitive.</p>
-    </div>
-  </section>
-
-  <FeaturedProjects title="Portfolio" />
-
   <ContentMedia spot="coming-soon">
     <h2>Starting a New Company?</h2>
     <p class="lead">
-      Let me handle the technical setup while you focus on your business. I'll get you up and running with a domain,
-      landing page, company email, and everything else you need to start collecting customers from day one.
+      Let me handle the technical setup while you focus on your business. I'll get you a domain, a landing page designed
+      around your brand, company email and everything else you need to start collecting customers from day one.
     </p>
   </ContentMedia>
 
   <ContentMedia spot="advise">
     <h2>Need Advising?</h2>
     <p class="lead">
-      New projects are overwhelming, and it helps to have someone who's been there. I'll ensure your design system,
-      brand kit, and source code are built on a foundation for growth and consistency.
+      New projects are overwhelming, and it helps to have someone who's been there. From wireframes and UX to clean,
+      fast, accessible code, I'll make sure your design system, brand kit and source code are built to grow.
     </p>
   </ContentMedia>
 
@@ -128,6 +104,38 @@ const jsonLd = {
 </DefaultLayout>
 
 <style>
+  /* The three pillars in the band: stacked on phones, three across from 768px */
+  .pillars {
+    display: grid;
+    gap: var(--space-4);
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    max-width: none;
+    list-style: none;
+  }
+
+  .pillars li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .pillars strong {
+    color: var(--color-band-fg);
+    font-weight: var(--weight-medium);
+  }
+
+  .pillars span {
+    color: var(--color-band-muted);
+  }
+
+  @media (min-width: 768px) {
+    .pillars {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+  }
+
   .closing {
     margin-bottom: var(--space-6);
     font-size: var(--text-h1);
