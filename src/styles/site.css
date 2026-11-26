@@ -317,17 +317,20 @@ ul.grid {
   color: inherit;
 }
 
-/* ---- Quote --------------------------------------------------------------------------- */
+/* ---- Quote ---------------------------------------------------------------------------
+   Testimonials read as body copy, not headings: a little larger than body text at the body line height, with clear
+   space between quotes, so several in a row don't run together. */
 .quote {
-  margin: var(--space-6) 0;
+  margin: var(--space-7) 0;
   border-left: var(--border-strong) solid var(--color-outline);
   padding-left: var(--space-5);
 }
 
 .quote__text {
   margin: 0;
-  font-size: var(--text-h3);
-  line-height: var(--leading-snug);
+  max-width: 40rem;
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
 }
 
 .quote__text p:last-child {
@@ -338,13 +341,18 @@ ul.grid {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-top: var(--space-4);
+  margin-top: var(--space-5);
   color: var(--color-fg-muted);
   font-style: normal;
   font-size: var(--text-sm);
 }
 
 /* Round and outlined by the kit's .media-round */
+.quote__author cite {
+  color: var(--color-fg);
+  font-weight: var(--weight-medium);
+}
+
 .quote__avatar {
   width: var(--space-7);
   height: var(--space-7);
@@ -420,8 +428,11 @@ ul.grid {
     width: 15rem;
   }
 
-  /* 2. The hero's art slot holds a proof point (a client screenshot and its result, Hero.astro), not a spot. On
-     phones it is a full-width showcase under the actions instead of the kit's 160px spot above the headline. */
+  /* 2. The hero spot stays hidden on phones: Ben wants the headline and buttons alone there. The kit (1.16) shows
+     it at 160px above the headline. From 768px it sits beside the headline, as the kit has it. */
+  .hero__art {
+    display: none;
+  }
 }
 
 /* 3. The hero has one filled button and a text link beside it. On phones they share one row instead of the kit's
@@ -483,10 +494,11 @@ ul.grid {
   border-bottom: 0;
 }
 
-/* 8. The closing "Let's Get to Work." heading gets the reserved yellow. In dark mode the text is yellow (13.9:1 on
+/* 8. The closing "Let's Get to Work." heading and the hero headline's answer (.highlight) get the reserved yellow. In dark mode the text is yellow (13.9:1 on
    Ink). Yellow text on Paper is 1.04:1, so in light mode the Ink text gets a yellow highlighter stroke behind it
    instead (Ink on yellow 13.9:1). The kit only allows yellow for text selection. */
-.section--closing h2 {
+.section--closing h2,
+.highlight {
   display: inline;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
@@ -499,13 +511,15 @@ ul.grid {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) .section--closing h2 {
+  :root:not([data-theme='light']) .section--closing h2,
+  :root:not([data-theme='light']) .highlight {
     background-image: none;
     color: var(--bv-yellow);
   }
 }
 
-:root[data-theme='dark'] .section--closing h2 {
+:root[data-theme='dark'] .section--closing h2,
+:root[data-theme='dark'] .highlight {
   background-image: none;
   color: var(--bv-yellow);
 }
@@ -522,9 +536,8 @@ ul.grid {
   border-color: var(--color-border);
 }
 
-/* ---- Offerings: each card shows a real artefact from shipped work ---------------------------------------------
-   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). Flat: the hard shadow is
-   kept for the primary action, so the cards are outlined only. */
+/* ---- Offerings: three short info cards ---------------------------------------------------------------------
+   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). */
 .offerings {
   display: grid;
   gap: var(--space-6);
@@ -537,7 +550,6 @@ ul.grid {
 @media (min-width: 768px) {
   .offerings {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-5);
   }
 }
 
@@ -547,16 +559,81 @@ ul.grid {
 
 .offerings .card {
   flex: 1;
-  box-shadow: none;
 }
 
-.offerings .card__media img {
-  object-position: var(--focus, center);
+/* 9. Light / dark mode: the OS setting decides until the visitor picks one, instead of the kit's three-way text
+   toggle in the footer (WEB.md §2). From 768px a sun / moon icon button follows the links (the moon shows in light
+   mode and the sun in dark, swapped by the .theme-image--* rules). On phones it lives at the bottom of the Menu
+   panel as a Light / Dark pair, the current one filled, so the header bar stays logo + Menu. */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
 }
 
-/* Phones: a shorter 2:1 crop, so three stacked artefacts don't add a screen of scrolling */
-@media (max-width: 767.98px) {
-  .offerings .card__media {
-    aspect-ratio: 2 / 1;
+.theme-toggle {
+  display: none;
+}
+
+.theme-switch {
+  display: inline-flex;
+  margin-top: var(--space-6);
+  border: var(--border-strong) solid var(--color-outline);
+  border-radius: var(--radius);
+}
+
+.theme-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0 var(--space-5);
+  min-height: 3rem;
+  color: inherit;
+  font: var(--weight-medium) var(--text-base) / 1 var(--font-sans);
+}
+
+.theme-switch button + button {
+  border-left: var(--border-strong) solid var(--color-outline);
+}
+
+.theme-switch button[aria-pressed='true'] {
+  background: var(--color-fg);
+  color: var(--color-bg);
+}
+
+.theme-switch svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .theme-switch {
+    display: none;
+  }
+
+  .theme-toggle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: calc((var(--tap-min) - 1.375rem) / -2);
+    border: 0;
+    background: none;
+    padding: 0;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    color: inherit;
+  }
+
+  .theme-toggle svg {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-accent);
   }
 }

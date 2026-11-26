@@ -117,7 +117,7 @@ const aiRange = [
     <div class="container">
       <div class="prose testimonials">
         <h2>Testimonials</h2>
-        <BlockQuote author="Robert, Lead Designer">
+        <BlockQuote author="Robert, Lead Designer" avatar="/testimonials/robert.jpg">
           Ben was an amazing communicator from start to finish. He clearly explained what needed to be done and offered
           smart suggestions for how we could make our site stronger. We gave him a set of website mocks, and he turned
           them into a fully realized, polished site incredibly fast. He’s professional, easy to talk to, and genuinely
@@ -204,11 +204,13 @@ const aiRange = [
     margin-bottom: 0;
   }
 
-  /* These short blocks sit under full-width cards, so they run the full width instead of the kit's 68-character
+  /* These blocks (and the testimonials) sit under full-width cards, so they run the full width instead of the kit's 68-character
      reading measure (WEB.md §3), which left them looking cut off on desktop */
   .section-head .lead,
   .brand,
-  .brand p {
+  .brand p,
+  .testimonials,
+  .testimonials :global(.quote__text) {
     max-width: none;
   }
 

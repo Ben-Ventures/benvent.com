@@ -2,16 +2,17 @@
 import advise from '../assets/spot/advise.inline.svg?raw'
 import comingSoon from '../assets/spot/coming-soon.inline.svg?raw'
 import legacySite from '../assets/spot/legacy-site.inline.svg?raw'
+import siteRescue from '../assets/spot/site-rescue.inline.svg?raw'
 
 /**
  * Spot Component
  *
  * @description A brand spot illustration as inline, theme-aware SVG (colours come from the sp-* classes in
- * base.css). The SVGs in src/assets/spot/ are copied verbatim from the brand kit's web/spot/; never edit their
- * colours. Beside text that already says the same thing, pass `decorative` to hide it from screen readers.
+ * base.css). The SVGs in src/assets/spot/ are copied verbatim from the brand kit's web/spot/ (except site-rescue, drawn for
+ * this site to the kit's spot rules); never edit their colours. Beside text that already says the same thing, pass `decorative` to hide it from screen readers.
  */
 interface Props {
-  name: 'advise' | 'coming-soon' | 'legacy-site'
+  name: 'advise' | 'coming-soon' | 'legacy-site' | 'site-rescue'
   /**
    * Swap the SVG's role="img" and aria-label for aria-hidden="true"
    * @default false
@@ -19,7 +20,7 @@ interface Props {
   decorative?: boolean
 }
 
-const spots = { advise, 'coming-soon': comingSoon, 'legacy-site': legacySite }
+const spots = { advise, 'coming-soon': comingSoon, 'legacy-site': legacySite, 'site-rescue': siteRescue }
 const { name, decorative = false } = Astro.props
 
 const svg = decorative ? spots[name].replace(/role="img" aria-label="[^"]*"/, 'aria-hidden="true"') : spots[name]
