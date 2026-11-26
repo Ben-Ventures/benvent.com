@@ -6,9 +6,9 @@ import Logo from './Logo.astro'
  * Header Component
  *
  * @description Sticky site header with a permanent 2px bottom edge: logo home link and main navigation. Below
- * 768px the navigation collapses behind a "Menu" text button into a full-screen panel (docs/brand/WEB.md §7). A
- * sun / moon button switches light and dark mode; it sits in the bar itself (after the links from 768px, beside
- * "Menu" on phones), so it is never behind the panel.
+ * 768px the navigation collapses behind a "Menu" text button into a full-screen panel (docs/brand/WEB.md §7). Light
+ * and dark mode: a sun / moon icon button after the links from 768px, and a Light / Dark pair at the bottom of the
+ * phone menu panel.
  */
 const links = [
   { href: '/', label: 'Home' },
@@ -39,6 +39,14 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
             ))
           }
         </ul>
+        <div class="theme-switch" role="group" aria-label="Theme">
+          <button type="button" data-theme-choice="light" aria-pressed="false">
+            <Icon name="lucide:sun" aria-hidden="true" />Light
+          </button>
+          <button type="button" data-theme-choice="dark" aria-pressed="false">
+            <Icon name="lucide:moon" aria-hidden="true" />Dark
+          </button>
+        </div>
       </nav>
       <button class="theme-toggle" type="button" aria-label="Switch to dark mode">
         <Icon name="lucide:moon" class="theme-image--light" aria-hidden="true" />
@@ -77,33 +85,41 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     })
   }
 
-  /* Theme: follows the OS until the visitor picks one with the sun / moon button, which flips whatever is showing
-     and stores the choice per browser under "bv-theme" (DefaultLayout applies it before paint). The icons swap by
-     CSS (.theme-image--light/dark in site.css), so only the label and theme-color are set here. */
+  /* Theme: follows the OS until the visitor picks one, then the choice is stored per browser under "bv-theme"
+     (DefaultLayout applies it before paint). Two controls: the sun / moon icon button in the bar from 768px, which
+     flips whatever is showing, and the Light / Dark pair at the bottom of the phone menu panel. The icon button's
+     icons swap by CSS (.theme-image--light/dark in site.css). */
   const root = document.documentElement
   const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle')
+  const themeChoices = document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]')
   const prefersDark = matchMedia('(prefers-color-scheme: dark)')
   const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : prefersDark.matches)
 
-  if (themeButton) {
-    const show = () => {
-      themeButton.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode')
-    }
+  const show = () => {
+    const dark = isDark()
+    themeButton?.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode')
+    themeChoices.forEach((choice) =>
+      choice.setAttribute('aria-pressed', String((choice.dataset.themeChoice === 'dark') === dark)),
+    )
+  }
 
-    themeButton.addEventListener('click', () => {
-      const next = isDark() ? 'light' : 'dark'
-      root.dataset.theme = next
-      document
-        .querySelectorAll('meta[name="theme-color"]')
-        .forEach((meta) => meta.setAttribute('content', next === 'dark' ? '#231F20' : '#F4F1EA'))
-      try {
-        localStorage.setItem('bv-theme', next)
-      } catch {
-        /* storage blocked: the choice lasts for this page only */
-      }
-      show()
-    })
-    prefersDark.addEventListener('change', show)
+  const setTheme = (next: 'light' | 'dark') => {
+    root.dataset.theme = next
+    document
+      .querySelectorAll('meta[name="theme-color"]')
+      .forEach((meta) => meta.setAttribute('content', next === 'dark' ? '#231F20' : '#F4F1EA'))
+    try {
+      localStorage.setItem('bv-theme', next)
+    } catch {
+      /* storage blocked: the choice lasts for this page only */
+    }
     show()
   }
+
+  themeButton?.addEventListener('click', () => setTheme(isDark() ? 'light' : 'dark'))
+  themeChoices.forEach((choice) =>
+    choice.addEventListener('click', () => setTheme(choice.dataset.themeChoice === 'dark' ? 'dark' : 'light')),
+  )
+  prefersDark.addEventListener('change', show)
+  show()
 </script>
