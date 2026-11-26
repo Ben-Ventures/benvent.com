@@ -5,7 +5,8 @@ import Logo from './Logo.astro'
  * Header Component
  *
  * @description Sticky site header with a permanent 2px bottom edge: logo home link and main navigation. Below
- * 768px the navigation collapses behind a "Menu" text button into a full-screen panel (docs/brand/WEB.md §7).
+ * 768px the navigation collapses behind a "Menu" text button into a full-screen panel (docs/brand/WEB.md §7). The
+ * last item is the light / dark mode button, so it sits in the nav from 768px and in the panel on phones.
  */
 const links = [
   { href: '/', label: 'Home' },
@@ -35,6 +36,9 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
             </li>
           ))
         }
+        <li class="site-nav__theme">
+          <button class="theme-toggle" type="button">Dark mode</button>
+        </li>
       </ul>
     </nav>
   </div>
@@ -66,5 +70,32 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
     matchMedia('(min-width: 768px)').addEventListener('change', (event) => {
       if (event.matches) setOpen(false)
     })
+  }
+
+  /* Theme: light by default (DefaultLayout sets <html data-theme> before paint). The button names the mode it
+     switches to, and the choice is stored per browser under "bv-theme". */
+  const root = document.documentElement
+  const themeButton = document.querySelector<HTMLButtonElement>('.theme-toggle')
+  const themeColor = document.querySelector('meta[name="theme-color"]')
+
+  if (themeButton) {
+    const show = () => {
+      const dark = root.dataset.theme === 'dark'
+      themeButton.textContent = dark ? 'Light mode' : 'Dark mode'
+      themeColor?.setAttribute('content', dark ? '#231F20' : '#F4F1EA')
+    }
+
+    themeButton.addEventListener('click', () => {
+      const dark = root.dataset.theme !== 'dark'
+      root.dataset.theme = dark ? 'dark' : 'light'
+      try {
+        if (dark) localStorage.setItem('bv-theme', 'dark')
+        else localStorage.removeItem('bv-theme')
+      } catch {
+        /* storage blocked: the choice lasts for this page only */
+      }
+      show()
+    })
+    show()
   }
 </script>
