@@ -23,9 +23,14 @@ interface Props {
    * @default "Selected work"
    */
   title?: string
+  /**
+   * A project id (its file name without .mdx) to show first, whether or not it's flagged as featured
+   */
+  lead?: string
 }
 
-const { eyebrow, limit = 3, title = 'Selected work' } = Astro.props
+const { eyebrow, limit = 3, title = 'Selected work', lead } = Astro.props
+const slugOf = (id: string) => id.replace(/\.mdx?$/, '')
 
 // Get projects from content collection
 const projects = await getCollection('projects', ({ data }) => !data.isHidden)
@@ -36,9 +41,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/
 })
 
 // Filter featured projects and sort them
+const isLead = (id: string) => !!lead && slugOf(id) === lead
 const featuredProjects = projects
-  .filter((project) => project.data.isFeatured)
-  .sort((a, b) => a.data.sortOrder - b.data.sortOrder)
+  .filter((project) => project.data.isFeatured || isLead(project.id))
+  .sort((a, b) => Number(isLead(b.id)) - Number(isLead(a.id)) || a.data.sortOrder - b.data.sortOrder)
   .slice(0, limit)
   .map((project) => ({
     ...project,
@@ -62,6 +68,7 @@ const featuredProjects = projects
               description={project.data.description}
               platform={project.data.platform}
               image={project.imageComponent}
+              imagePosition={project.data.featuredPosition}
               badge={project.data.badge}
             />
           </li>
@@ -73,3 +80,13 @@ const featuredProjects = projects
     </div>
   </div>
 </section>
+
+<style>
+  /* Tablet: the kit grid is 8 columns and each card spans 4, so three cards would leave a hole. The lead project
+     spans the full width instead, with the next two side by side under it. Phones stay one column, desktop three. */
+  @media (min-width: 768px) and (max-width: 1023.98px) {
+    .grid > li:first-child {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

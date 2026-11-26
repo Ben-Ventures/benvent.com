@@ -16,6 +16,8 @@ const projects = defineCollection({
       sortOrder: z.number(),
       description: z.string(),
       featuredImage: z.string(),
+      // Optional CSS object-position for the card image's crop (default: top, centred), e.g. '25% top'
+      featuredPosition: z.string().optional(),
       badge: z.string().optional(), // a short label shown as the kit's magenta .badge, e.g. "Latest"
       // Optional light and dark banners that follow the site theme; without them the page uses public/projects/<id>/banner.png
       bannerLight: image().optional(),
