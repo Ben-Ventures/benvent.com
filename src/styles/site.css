@@ -317,17 +317,20 @@ ul.grid {
   color: inherit;
 }
 
-/* ---- Quote --------------------------------------------------------------------------- */
+/* ---- Quote ---------------------------------------------------------------------------
+   Testimonials read as body copy, not headings: a little larger than body text at the body line height, with clear
+   space between quotes, so several in a row don't run together. */
 .quote {
-  margin: var(--space-6) 0;
+  margin: var(--space-7) 0;
   border-left: var(--border-strong) solid var(--color-outline);
   padding-left: var(--space-5);
 }
 
 .quote__text {
   margin: 0;
-  font-size: var(--text-h3);
-  line-height: var(--leading-snug);
+  max-width: 40rem;
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
 }
 
 .quote__text p:last-child {
@@ -338,13 +341,18 @@ ul.grid {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  margin-top: var(--space-4);
+  margin-top: var(--space-5);
   color: var(--color-fg-muted);
   font-style: normal;
   font-size: var(--text-sm);
 }
 
 /* Round and outlined by the kit's .media-round */
+.quote__author cite {
+  color: var(--color-fg);
+  font-weight: var(--weight-medium);
+}
+
 .quote__avatar {
   width: var(--space-7);
   height: var(--space-7);
@@ -420,8 +428,11 @@ ul.grid {
     width: 15rem;
   }
 
-  /* 2. The hero's art slot holds a proof point (a client screenshot and its result, Hero.astro), not a spot. On
-     phones it is a full-width showcase under the actions instead of the kit's 160px spot above the headline. */
+  /* 2. The hero spot stays hidden on phones: Ben wants the headline and buttons alone there. The kit (1.16) shows
+     it at 160px above the headline. From 768px it sits beside the headline, as the kit has it. */
+  .hero__art {
+    display: none;
+  }
 }
 
 /* 3. The hero has one filled button and a text link beside it. On phones they share one row instead of the kit's
@@ -522,9 +533,8 @@ ul.grid {
   border-color: var(--color-border);
 }
 
-/* ---- Offerings: each card shows a real artefact from shipped work ---------------------------------------------
-   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). Flat: the hard shadow is
-   kept for the primary action, so the cards are outlined only. */
+/* ---- Offerings: three short info cards ---------------------------------------------------------------------
+   Three across from 768px (the brand grid's 8 columns would leave a 2 + 1 gap at tablet). */
 .offerings {
   display: grid;
   gap: var(--space-6);
@@ -537,7 +547,6 @@ ul.grid {
 @media (min-width: 768px) {
   .offerings {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-5);
   }
 }
 
@@ -547,16 +556,44 @@ ul.grid {
 
 .offerings .card {
   flex: 1;
-  box-shadow: none;
 }
 
-.offerings .card__media img {
-  object-position: var(--focus, center);
+/* 9. Light mode by default, whatever the OS prefers: <html data-theme="light"> is set in DefaultLayout, so the kit's
+   prefers-color-scheme rules never apply; dark mode is opt-in from the header's "Dark mode" button (the kit follows
+   the OS and puts a three-way toggle in the footer, WEB.md §2). The button sits in the nav like a link, and in the
+   phone menu panel at the panel's link size. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  padding: 0;
+  min-height: var(--tap-min);
+  color: inherit;
+  font: var(--weight-medium) var(--text-base) / 1 var(--font-sans);
 }
 
-/* Phones: a shorter 2:1 crop, so three stacked artefacts don't add a screen of scrolling */
+.theme-toggle:hover {
+  color: var(--color-accent);
+}
+
 @media (max-width: 767.98px) {
-  .offerings .card__media {
-    aspect-ratio: 2 / 1;
+  .theme-toggle {
+    width: 100%;
+    min-height: 3.5rem;
+    font-size: var(--text-h2);
+  }
+
+  .site-nav li.site-nav__theme {
+    border-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-nav__theme {
+    margin-left: var(--space-2);
+    border-left: var(--border-width) solid var(--color-rule);
+    padding-left: var(--space-6);
   }
 }
