@@ -1,11 +1,11 @@
 ---
 import Logo from './Logo.astro'
-import { contactLabel, enquiryHref } from '../data/contact'
 
 /**
  * Footer Component
  *
- * @description Site footer: mark at 24px, © line, secondary links (the theme toggle is in the header)
+ * @description Site footer: mark at 24px, © line, the sitemap link. Contact lives in the hero and the closing
+ * section, so the footer doesn't repeat it; the theme toggle is in the header.
  */
 const currentYear = new Date().getFullYear()
 ---
@@ -17,7 +17,6 @@ const currentYear = new Date().getFullYear()
     </a>
     <p>&copy; {currentYear} Ben Ventures LLC, a New York company.</p>
     <ul>
-      <li><a href={enquiryHref()}>{contactLabel}</a></li>
       <li><a href="/sitemap/">Sitemap</a></li>
     </ul>
   </div>
