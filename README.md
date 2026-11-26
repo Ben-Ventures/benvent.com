@@ -1,5 +1,7 @@
 # Ben Ventures
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1d6ecafc-3162-49c0-83e6-8ab46fb08dcc/deploy-status)](https://app.netlify.com/projects/benvent/deploys)
+
 The website for [Ben Ventures](https://www.benvent.com/): design and frontend development. Built with
 [Astro](https://astro.build), deployed on Netlify.
 
